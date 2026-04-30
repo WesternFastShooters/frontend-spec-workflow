@@ -1,0 +1,10 @@
+{
+  "name": "@your-org/openspec-frontend-project",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Install a Codex skill that turns frontend requirements and design discussions into durable OpenSpec artifacts.",
+  "bin": {
+    "openspec-frontend-project": "./bin/openspec-frontend-project.js"
+  },
+  "license": "MIT"
+}
