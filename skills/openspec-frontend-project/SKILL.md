@@ -5,7 +5,7 @@ description: Installable skill for frontend projects that turns already-discusse
 
 # OpenSpec Frontend Project
 
-Use this skill when a frontend project has fragmented inputs such as requirement docs, design notes, old code, API notes, screenshots, or long discussion history, and the goal is to produce or refresh a project-local `openspec/` tree that AI agents can rely on.
+Use this skill when a frontend project has fragmented inputs such as requirement docs, design notes, old code, API notes, screenshots, long discussion history, or project-local draft artifacts, and the goal is to produce or refresh a project-local `openspec/` tree that AI agents can rely on.
 
 This skill is a convergence step. The user discusses the work in Codex, Claude, or another AI workspace first, then explicitly invokes this skill once the current scope feels clear enough to write down.
 
@@ -20,6 +20,7 @@ This skill is responsible for one thing:
 In practice that means:
 
 - gather the bounded set of source materials for the current slice
+- read the shared draft tree under `planning/frontend/` before depending on chat history alone
 - extract contracts, behaviors, flows, and rules from those materials
 - preserve assumptions, open questions, and source trace where needed
 - produce `openspec/` files that downstream implementation and verification agents can use as their constraint input
@@ -47,6 +48,8 @@ Produce durable OpenSpec artifacts that:
 - become the durable constraint input for downstream implementation, test-generation, and verification work inside the current scope
 
 The invocation itself is the user's signal that the current scope should be converged. Do not re-open product decisions unless the inputs are still contradictory or materially incomplete.
+
+When draft artifacts exist under `planning/frontend/`, treat them as first-class inputs to the convergence pass.
 
 ## Do not do these things
 
@@ -98,6 +101,7 @@ Do not let downstream agents treat `flows/` as a signal to immediately write ful
 ## Output shape
 
 Read [references/output-structure.md](references/output-structure.md) before creating files.
+Read [references/draft-handoff.md](references/draft-handoff.md) before gathering inputs from project-local draft assets.
 
 Always target this minimum structure when enough information exists:
 
@@ -118,7 +122,19 @@ Use `openspec/references/` to keep normalized source notes, copied excerpts, or 
 Treat the skill invocation as the user's signal to converge the current discussion. Identify the bounded project slice being written down: greenfield setup, a scoped refactor, or a net-new feature.
 
 2. Gather the real inputs.
-Read only the specific requirement docs, design docs, API notes, screenshots, Storybook references, and legacy code pointers that matter for the requested scope.
+Read only the specific requirement docs, design docs, API notes, screenshots, Storybook references, legacy code pointers, and project-local draft artifacts that matter for the requested scope.
+
+Preferred draft locations to scan first when they exist:
+
+- `planning/frontend/overview.md`
+- `planning/frontend/architecture.md`
+- `planning/frontend/decisions.md`
+- `planning/frontend/modules/`
+- `planning/frontend/contracts/`
+- `planning/frontend/scenarios/`
+- `planning/frontend/testing/`
+- `planning/frontend/references/`
+- `planning/frontend/open-questions.md`
 
 3. Normalize the truth sources.
 Separate the inputs into:
@@ -138,6 +154,8 @@ When something is not settled, write it down as an assumption or open question r
 
 6. Preserve source trace when it matters.
 If multiple inputs contributed to a decision, keep that provenance in `openspec/references/` or in the project documents so later agents can see where constraints came from.
+
+If the draft tree and the chat thread disagree, prefer explicit on-disk draft artifacts unless the user has clearly superseded them in the current request.
 
 7. Keep visual constraints out of OpenSpec.
 If styling fidelity matters, point to Storybook stories, screenshots, or visual references instead. Read [references/style-boundary.md](references/style-boundary.md) when the project mixes behavior and appearance concerns.
@@ -199,7 +217,7 @@ Do not copy templates blindly. Remove sections that do not apply.
 Default to this sequence:
 
 1. Identify the bounded scope the user wants to converge right now.
-2. Identify which source artifacts are in scope.
+2. Identify which source artifacts are in scope, including draft files already written under `planning/frontend/`.
 3. Synthesize `proposal.md` and `design.md`.
 4. Create or refresh contracts.
 5. Create the minimum useful behavior units.
@@ -217,3 +235,4 @@ The spec is in good shape when:
 - unresolved ambiguity is explicit
 - the scope is bounded enough that a downstream agent does not need to re-read the entire discussion thread to begin implementation
 - multiple input sources have been converged into one durable spec tree instead of leaving the next agent to reconcile them again
+- the project-local draft tree has been consumed, not bypassed

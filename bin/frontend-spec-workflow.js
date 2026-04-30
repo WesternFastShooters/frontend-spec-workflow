@@ -4,24 +4,25 @@ const fs = require("fs");
 const path = require("path");
 
 const SUPPORTED_TOOLS = new Set(["codex"]);
-const SKILL_NAME = "openspec-frontend-project";
+const SKILLS_DIR = "skills";
 
 function printUsage() {
   console.log(
     [
       "Usage:",
-      "  npx @your-org/openspec-frontend-project --tool codex [--dest /path/to/project]",
+      "  npx @westernfastshooters/frontend-spec-workflow --tool codex [--dest /path/to/project] [--skill <name>]",
       "",
       "Options:",
       "  --tool <name>   Target AI tool. Currently supported: codex",
       "  --dest <path>   Project root to install into. Defaults to current working directory.",
+      "  --skill <name>  Install only the named bundled skill. Repeatable. Defaults to all bundled skills.",
       "  --force         Overwrite existing skill directory if it already exists."
     ].join("\n")
   );
 }
 
 function parseArgs(argv) {
-  const args = { dest: process.cwd(), force: false };
+  const args = { dest: process.cwd(), force: false, skills: [] };
 
   for (let i = 0; i < argv.length; i += 1) {
     const token = argv[i];
@@ -34,6 +35,12 @@ function parseArgs(argv) {
 
     if (token === "--dest") {
       args.dest = path.resolve(argv[i + 1]);
+      i += 1;
+      continue;
+    }
+
+    if (token === "--skill") {
+      args.skills.push(argv[i + 1]);
       i += 1;
       continue;
     }
@@ -74,12 +81,26 @@ function copyDirectory(sourceDir, targetDir) {
   }
 }
 
-function toolSkillDir(projectRoot, tool) {
+function toolSkillDir(projectRoot, tool, skillName) {
   if (tool === "codex") {
-    return path.join(projectRoot, ".codex", "skills", SKILL_NAME);
+    return path.join(projectRoot, ".codex", "skills", skillName);
   }
 
   throw new Error(`Unsupported tool: ${tool}`);
+}
+
+function listBundledSkills(packageRoot) {
+  const skillsRoot = path.join(packageRoot, SKILLS_DIR);
+
+  if (!fs.existsSync(skillsRoot)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(skillsRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort();
 }
 
 function main() {
@@ -114,33 +135,53 @@ function main() {
   }
 
   const packageRoot = path.resolve(__dirname, "..");
-  const sourceDir = path.join(packageRoot, "skills", SKILL_NAME);
-  const destinationDir = toolSkillDir(args.dest, args.tool);
+  const bundledSkills = listBundledSkills(packageRoot);
 
-  if (!fs.existsSync(sourceDir)) {
-    console.error(`Bundled skill not found: ${sourceDir}`);
+  if (bundledSkills.length === 0) {
+    console.error(`No bundled skills found under ${path.join(packageRoot, SKILLS_DIR)}`);
     process.exit(1);
   }
 
-  if (fs.existsSync(destinationDir)) {
-    if (!args.force) {
-      console.error(
-        `Skill already exists at ${destinationDir}. Re-run with --force to overwrite it.`
-      );
+  const selectedSkills = args.skills.length > 0 ? args.skills : bundledSkills;
+  const unknownSkills = selectedSkills.filter((skill) => !bundledSkills.includes(skill));
+
+  if (unknownSkills.length > 0) {
+    console.error(
+      `Unknown bundled skill(s): ${unknownSkills.join(", ")}. Available skills: ${bundledSkills.join(", ")}`
+    );
+    process.exit(1);
+  }
+
+  for (const skillName of selectedSkills) {
+    const sourceDir = path.join(packageRoot, SKILLS_DIR, skillName);
+    const destinationDir = toolSkillDir(args.dest, args.tool, skillName);
+
+    if (!fs.existsSync(sourceDir)) {
+      console.error(`Bundled skill not found: ${sourceDir}`);
       process.exit(1);
     }
 
-    fs.rmSync(destinationDir, { recursive: true, force: true });
+    if (fs.existsSync(destinationDir)) {
+      if (!args.force) {
+        console.error(
+          `Skill already exists at ${destinationDir}. Re-run with --force to overwrite it.`
+        );
+        process.exit(1);
+      }
+
+      fs.rmSync(destinationDir, { recursive: true, force: true });
+    }
+
+    copyDirectory(sourceDir, destinationDir);
+    console.log(`Installed ${skillName} for ${args.tool}`);
+    console.log(`Skill path: ${destinationDir}`);
+    console.log("");
   }
 
-  copyDirectory(sourceDir, destinationDir);
-
-  console.log(`Installed ${SKILL_NAME} for ${args.tool}`);
   console.log(`Project root: ${args.dest}`);
-  console.log(`Skill path: ${destinationDir}`);
-  console.log("");
   console.log("Next step inside Codex:");
-  console.log("  Use the installed skill to synthesize an openspec/ tree from your discussion context and source documents.");
+  console.log("  Use the discussion-stage skills to write project-local draft assets under planning/frontend/,");
+  console.log("  then use openspec-frontend-project to synthesize openspec/ from those draft artifacts and source documents.");
 }
 
 main();
