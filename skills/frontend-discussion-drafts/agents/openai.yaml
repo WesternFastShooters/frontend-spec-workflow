@@ -1,3 +1,3 @@
 display_name: Frontend Discussion Drafts
 short_description: Write already-discussed frontend drafts to planning/frontend/.
-default_prompt: Use $frontend-discussion-drafts to write the current bounded frontend discussion into stable draft files under planning/frontend/ before OpenSpec convergence.
+default_prompt: Use $frontend-discussion-drafts with /frontend-spec-workflow-draft to write the current bounded frontend discussion into stable draft files under planning/frontend/ before OpenSpec convergence.

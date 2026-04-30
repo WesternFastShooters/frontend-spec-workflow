@@ -9,6 +9,8 @@ Use this skill during discussion when the team wants to make test coverage expli
 
 This skill should enumerate scenarios, not generate final test code.
 
+Recommended trigger phrase: `/frontend-spec-workflow-enumerate-tests`
+
 ## Responsibility
 
 This skill is responsible for:

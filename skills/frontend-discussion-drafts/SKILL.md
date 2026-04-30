@@ -9,6 +9,8 @@ Use this skill during discussion when the team has already produced enough clari
 
 This skill is for draft stabilization, not final spec convergence.
 
+Recommended trigger phrase: `/frontend-spec-workflow-draft`
+
 ## Responsibility
 
 This skill is responsible for:

@@ -8,19 +8,22 @@ This package now bundles a small frontend engineering skill stack:
 
 - `frontend-discussion-drafts`
   Writes already-discussed project context into stable, reviewable draft documents under `planning/frontend/` instead of leaving important decisions trapped in chat history.
+  Recommended trigger: `/frontend-spec-workflow-draft`
 - `frontend-test-scenario-enumerator`
   Enumerates frontend test scenarios as structured draft assets during discussion, with strong coverage across flows, interactions, environments, data variants, failure cases, and risk pairs.
+  Recommended trigger: `/frontend-spec-workflow-enumerate-tests`
 - `openspec-frontend-project`
   Reads the draft artifacts and other source materials, then converges them into durable OpenSpec assets under `openspec/`.
+  Recommended trigger: `/frontend-spec-workflow-solidify-openspec`
 
 ## Draft-First Workflow
 
 The intended workflow is:
 
 1. Discuss a bounded project slice in Codex, Claude, or another AI workspace.
-2. Use `frontend-discussion-drafts` to write stable planning artifacts into `planning/frontend/`.
-3. Use `frontend-test-scenario-enumerator` to expand and structure the candidate verification space in `planning/frontend/testing/`.
-4. Use `openspec-frontend-project` with `/openspec-solidify-frontend-project` to turn the draft tree plus other sources into `openspec/`.
+2. Use `frontend-discussion-drafts` with `/frontend-spec-workflow-draft` to write stable planning artifacts into `planning/frontend/`.
+3. Use `frontend-test-scenario-enumerator` with `/frontend-spec-workflow-enumerate-tests` to expand and structure the candidate verification space in `planning/frontend/testing/`.
+4. Use `openspec-frontend-project` with `/frontend-spec-workflow-solidify-openspec` to turn the draft tree plus other sources into `openspec/`.
 
 This makes the discussion phase reviewable on disk before formal OpenSpec convergence begins.
 
@@ -124,9 +127,18 @@ The bundled skills do not:
 - embed runner-specific testing instructions such as Jest or Playwright directly into OpenSpec
 - act as a one-pass full-repo migration engine for an entire large legacy application
 
+## Recommended Triggers
+
+- `/frontend-spec-workflow-draft`
+  Write the current bounded frontend discussion into draft artifacts under `planning/frontend/`.
+- `/frontend-spec-workflow-enumerate-tests`
+  Expand the current bounded frontend testing surface into structured scenario drafts under `planning/frontend/testing/`.
+- `/frontend-spec-workflow-solidify-openspec`
+  Converge the draft tree and other source materials into durable OpenSpec assets under `openspec/`.
+
 ## OpenSpec Skill Trigger
 
-Use `/openspec-solidify-frontend-project` as the team-facing trigger phrase when the current frontend scope has been discussed clearly enough and the next step is to write the agreed context into OpenSpec.
+Use `/frontend-spec-workflow-solidify-openspec` as the team-facing trigger phrase when the current frontend scope has been discussed clearly enough and the next step is to write the agreed context into OpenSpec.
 
 Treat this trigger as meaning:
 

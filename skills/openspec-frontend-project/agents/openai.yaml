@@ -1,3 +1,3 @@
 display_name: OpenSpec Frontend
 short_description: Converge frontend drafts and sources into durable OpenSpec.
-default_prompt: Use $openspec-frontend-project to generate or refresh the frontend openspec/ tree from planning/frontend/ draft artifacts and the provided project materials. Treat this as a bounded convergence pass, not fresh product decision-making.
+default_prompt: Use $openspec-frontend-project with /frontend-spec-workflow-solidify-openspec to generate or refresh the frontend openspec/ tree from planning/frontend/ draft artifacts and the provided project materials. Treat this as a bounded convergence pass, not fresh product decision-making.

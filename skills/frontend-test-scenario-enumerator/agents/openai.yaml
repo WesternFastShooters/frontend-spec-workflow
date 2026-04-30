@@ -1,3 +1,3 @@
 display_name: Frontend Test Scenario Enumerator
 short_description: Expand frontend test scenarios into planning/frontend/testing/.
-default_prompt: Use $frontend-test-scenario-enumerator to enumerate the current frontend testing surface into structured draft assets under planning/frontend/testing/ before OpenSpec convergence.
+default_prompt: Use $frontend-test-scenario-enumerator with /frontend-spec-workflow-enumerate-tests to enumerate the current frontend testing surface into structured draft assets under planning/frontend/testing/ before OpenSpec convergence.

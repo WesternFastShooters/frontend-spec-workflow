@@ -9,7 +9,7 @@ Use this skill when a frontend project has fragmented inputs such as requirement
 
 This skill is a convergence step. The user discusses the work in Codex, Claude, or another AI workspace first, then explicitly invokes this skill once the current scope feels clear enough to write down.
 
-Recommended trigger phrase: `/openspec-solidify-frontend-project`
+Recommended trigger phrase: `/frontend-spec-workflow-solidify-openspec`
 
 ## Responsibility
 
@@ -72,7 +72,7 @@ Use this skill after a discussion has already produced enough clarity for a boun
 
 The invocation means: "take the current agreed context and write it down as OpenSpec."
 
-When using the recommended trigger phrase `/openspec-solidify-frontend-project`, interpret it as a request to solidify the already-discussed frontend scope into durable OpenSpec files rather than to continue product ideation.
+When using the recommended trigger phrase `/frontend-spec-workflow-solidify-openspec`, interpret it as a request to solidify the already-discussed frontend scope into durable OpenSpec files rather than to continue product ideation.
 
 ## Verification abstraction
 
