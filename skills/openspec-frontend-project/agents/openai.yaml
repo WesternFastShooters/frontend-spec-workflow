@@ -1,3 +1,3 @@
 display_name: OpenSpec Frontend
-short_description: Synthesize frontend OpenSpec artifacts from project discussions and source documents.
-default_prompt: Generate or refresh the frontend openspec/ tree from the current discussion context and the provided project materials. Keep verification framework-agnostic and preserve unresolved questions explicitly.
+short_description: Converge already-discussed frontend project or feature context into durable OpenSpec artifacts.
+default_prompt: Generate or refresh the frontend openspec/ tree from the current discussion context and the provided project materials. Treat this as a convergence pass over a bounded scope, not as fresh product decision-making. Keep verification framework-agnostic, preserve unresolved questions explicitly, and produce durable spec assets for downstream implementation and verification agents.

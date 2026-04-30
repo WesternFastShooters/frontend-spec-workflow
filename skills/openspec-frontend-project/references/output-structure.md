@@ -29,10 +29,11 @@ openspec/
 - `behaviors/` is for module-level behavior units.
 - `flows/` is for journey-level cross-module paths.
 - `rules/` is for global constraints and validation intent.
-- `references/` is for copied or normalized source material that should stay near the spec.
+- `references/` is for copied or normalized source material, source-trace summaries, and other provenance that should stay near the spec.
 
 ## Keep it clean
 
 - Do not store generated test code under `openspec/`.
 - Do not mix styling references into behavior or flow files.
 - Do not duplicate the same selector registry across multiple locations.
+- Do not treat one convergence pass as a requirement to spec the entire product when the active scope is smaller.

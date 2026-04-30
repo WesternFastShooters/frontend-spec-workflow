@@ -16,7 +16,15 @@
 
 - 
 
+## Current Convergence Slice
+
+- 
+
 ## Source Inputs
+
+- 
+
+## Confirmed Decisions
 
 - 
 
