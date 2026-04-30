@@ -135,15 +135,16 @@ Read only the specific requirement docs, design docs, API notes, screenshots, St
 
 Preferred draft locations to scan first when they exist:
 
-- `planning/frontend/overview.md`
-- `planning/frontend/architecture.md`
-- `planning/frontend/decisions.md`
+- `planning/frontend/frontend-discussion-draft.md`
+- `planning/frontend/testing/test-scenarios-draft.md`
 - `planning/frontend/modules/`
 - `planning/frontend/contracts/`
 - `planning/frontend/scenarios/`
 - `planning/frontend/testing/`
 - `planning/frontend/references/`
 - `planning/frontend/open-questions.md`
+
+Treat those two canonical draft files as the primary entry points when they exist. Use the support directories to deepen specific sections rather than bypassing the draft entry points.
 
 3. Normalize the truth sources.
 Separate the inputs into:

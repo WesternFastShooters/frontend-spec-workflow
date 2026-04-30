@@ -25,6 +25,7 @@ Expand flows, interactions, environments, data variants, failures, and verificat
 This skill is responsible for:
 
 - expanding frontend test scenarios into a structured draft bundle under `planning/frontend/testing/`
+- converting requirement, interface, and behavior discussions into traceable scenario records
 - enumerating scenario dimensions beyond happy-path requirements
 - identifying high-risk pairs and coverage rules so later agents do not under-test critical behavior
 
@@ -38,14 +39,20 @@ This skill is not responsible for:
 
 Read [references/output-structure.md](references/output-structure.md) before writing files.
 Read [references/scenario-dimensions.md](references/scenario-dimensions.md) before expanding coverage.
+Read [references/scenario-design-methods.md](references/scenario-design-methods.md) before turning requirements or interfaces into scenarios.
 
 Default destination:
 
-- `planning/frontend/testing/overview.md`
+- `planning/frontend/testing/test-scenarios-draft.md`
+
+Optional support locations when the slice is large or highly combinatorial:
+
+- `planning/frontend/testing/scenario-records.md`
 - `planning/frontend/testing/flow-matrix.yaml`
 - `planning/frontend/testing/interaction-matrices/`
 - `planning/frontend/testing/environment-matrix.yaml`
 - `planning/frontend/testing/data-variants.yaml`
+- `planning/frontend/testing/interface-matrix.yaml`
 - `planning/frontend/testing/coverage-rules.yaml`
 - `planning/frontend/testing/high-risk-pairs.yaml`
 - `planning/frontend/testing/verification-layer-map.yaml`
@@ -56,9 +63,12 @@ Default destination:
 
 If you need a starting point, adapt the relevant templates from `assets/templates/`:
 
+- `test-scenarios-draft.md.tpl`
 - `overview.md.tpl`
+- `scenario-records.md.tpl`
 - `flow-matrix.yaml.tpl`
 - `environment-matrix.yaml.tpl`
+- `interface-matrix.yaml.tpl`
 - `coverage-rules.yaml.tpl`
 - `high-risk-pairs.yaml.tpl`
 - `verification-layer-map.yaml.tpl`
@@ -69,6 +79,7 @@ Use these as scaffolding for the current bounded slice rather than as a universa
 
 Start from a bounded feature, module, or journey and expand coverage across these dimensions:
 
+- requirement and interface intent
 - business flow
 - interaction state
 - environment and layout
@@ -83,23 +94,28 @@ Start from a bounded feature, module, or journey and expand coverage across thes
 - verification layer mapping
 
 Prefer structured matrices over prose-only notes.
+Every scenario should have a stable scenario ID so later test code can trace back to it.
+Write or refresh the canonical testing draft first, then split into extra matrices only when that adds review value.
 
 ## Enumeration rules
 
 1. Begin with the current bounded slice, not the whole product.
-2. Enumerate candidate scenarios by combining dimensions instead of relying on memory.
-3. Add pruning rules so the result stays reviewable.
-4. Mark:
+2. Read the current draft artifacts first, especially `planning/frontend/frontend-discussion-draft.md` and any requirement, architecture, contract, scenario, and open-question drafts under `planning/frontend/`.
+3. If requirement or interface clarity is weak, record that weakness and enumerate scenarios against the best-known requirement statement instead of silently inventing product behavior.
+4. Enumerate candidate scenarios by combining dimensions and by applying explicit scenario-design methods instead of relying on memory.
+5. Add pruning rules so the result stays reviewable.
+6. Mark:
 - must-cover scenarios
 - high-risk pairs
 - deferred combinations
 - unknowns that block reliable test planning
-5. Keep the result ready for later OpenSpec convergence.
+7. Keep the result ready for later OpenSpec convergence and later test-code generation.
 
 ## What to challenge
 
 When reviewing discussion output, explicitly challenge whether it covers:
 
+- requirement and interface acceptance criteria
 - empty, min, max, and malformed data
 - loading, error, retry, rollback, and recovery
 - hover, focus, keyboard, drag, selection, and scroll combinations
@@ -107,11 +123,13 @@ When reviewing discussion output, explicitly challenge whether it covers:
 - timing races, duplicate actions, rapid repeated input, and async re-entry
 - permission differences, feature flags, and config switches
 - browser or platform assumptions when they materially affect behavior
+- idempotency, dependency failure, and security-sensitive cases when APIs or commands are involved
 
 ## Completion bar
 
 The scenario draft is in good shape when:
 
+- requirement and interface intent has been translated into stable scenario records with IDs
 - the next agent can see what must be covered at each verification layer
 - major scenario dimensions are explicit rather than implied
 - high-risk pairs are called out instead of buried

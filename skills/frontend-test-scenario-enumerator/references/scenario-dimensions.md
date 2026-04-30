@@ -2,6 +2,7 @@
 
 The discussion notes already cover a strong core:
 
+- requirement and interface intent
 - flow
 - interaction
 - environment
@@ -76,3 +77,11 @@ Every scenario should be mapped, when possible, to one or more verification laye
 - `journey`
 
 Do not force every combination into runnable test code. The discussion-stage goal is to make the candidate surface explicit, then prune and prioritize it.
+
+## Traceability
+
+Keep scenario IDs stable enough that a later agent can map:
+
+- requirement or interface statement
+- scenario record
+- test-code implementation

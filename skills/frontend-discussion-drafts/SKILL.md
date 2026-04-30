@@ -37,12 +37,14 @@ This skill is not responsible for:
 ## Output shape
 
 Read [references/output-structure.md](references/output-structure.md) before creating or updating files.
+Read [references/discussion-topics.md](references/discussion-topics.md) before steering or stabilizing a new discussion slice.
 
 Default destination:
 
-- `planning/frontend/overview.md`
-- `planning/frontend/architecture.md`
-- `planning/frontend/decisions.md`
+- `planning/frontend/frontend-discussion-draft.md`
+
+Optional support locations when the slice is too large or too structured for one file:
+
 - `planning/frontend/modules/`
 - `planning/frontend/contracts/`
 - `planning/frontend/scenarios/`
@@ -55,6 +57,8 @@ Use the `testing/` subtree only when the discussion specifically enters scenario
 
 If you need a starting point, adapt the relevant templates from `assets/templates/`:
 
+- `frontend-discussion-draft.md.tpl`
+- `discussion-agenda.md.tpl`
 - `overview.md.tpl`
 - `architecture.md.tpl`
 - `decisions.md.tpl`
@@ -66,14 +70,34 @@ Do not copy templates blindly. Keep only the sections that help the current boun
 ## Writing method
 
 1. Confirm the bounded slice being discussed.
-2. Read only the source materials that matter for that slice.
-3. Separate inputs into:
+2. Use the discussion topics checklist to see what is already clear and what is still missing.
+3. Read only the source materials that matter for that slice.
+4. Separate inputs into:
 - confirmed decisions
 - assumptions
 - open questions
 - evidence or source trace
-4. Write stable project-local drafts instead of leaving important conclusions only in the chat transcript.
-5. Prefer updating existing draft files over creating scattered one-off notes.
+5. Prompt for missing but important discussion areas when the current slice is still vague.
+6. Write or refresh the canonical draft file first so the current slice has one stable entry point on disk.
+7. Split information into support files only when a section becomes independently useful, large, or heavily structured.
+8. Prefer updating existing draft files over creating scattered one-off notes.
+
+## Discussion guidance
+
+Do not assume the human collaborator already knows what needs to be discussed.
+
+When the current slice is underspecified, actively steer the discussion toward the most important missing areas, such as:
+
+- whether there is a real requirement document or only an informal requirement statement
+- whether the requirement has gaps, ambiguities, or contradictions
+- architecture direction and technical choices
+- layer boundaries
+- module boundaries
+- interface definitions and behavior descriptions
+- critical paths and integration points
+- testing expectations and scenario coverage needs
+
+Prefer short, concrete prompts that help the user clarify the current bounded slice instead of broad open-ended brainstorming.
 
 ## Draft rules
 
@@ -82,6 +106,9 @@ Do not copy templates blindly. Keep only the sections that help the current boun
 - Distinguish facts from inferences.
 - Record where a key decision came from when that provenance matters.
 - Do not pretend draft artifacts are already final OpenSpec.
+- Record what is still missing from the discussion instead of hiding incompleteness.
+- Default to one canonical draft file for the slice instead of creating many small notes.
+- Split into extra draft files only when that reduces ambiguity more than it increases navigation cost.
 
 ## Completion bar
 
@@ -90,3 +117,4 @@ The draft pass is in good shape when:
 - a teammate can review the current bounded slice on disk
 - a later agent can find the architecture, module, and contract drafts without replaying the whole discussion
 - unresolved items are explicit instead of buried in chat history
+- the draft tree makes it obvious which discussion areas are already clear and which still need work

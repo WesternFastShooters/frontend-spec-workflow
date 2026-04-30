@@ -9,26 +9,23 @@ When these files or directories exist, read the relevant subset before synthesiz
 ```text
 planning/
   frontend/
-    overview.md
-    architecture.md
-    decisions.md
+    frontend-discussion-draft.md
     modules/
     contracts/
     scenarios/
     testing/
+      test-scenarios-draft.md
     references/
     open-questions.md
 ```
 
 ## What each area usually means
 
-- `overview.md`: bounded scope, goals, non-goals, and current delivery slice
-- `architecture.md`: layering, module map, boundaries, dependency edges
-- `decisions.md`: explicit discussion outcomes that should not be rediscovered from scratch
+- `frontend-discussion-draft.md`: the canonical discussion-stage summary for the bounded slice, including scope, requirement clarity, design references, architecture direction, module split, contracts, critical paths, decisions, and open questions
 - `modules/`: module-local draft notes such as nodes, plugins, panels, shells, bridges
 - `contracts/`: pre-OpenSpec API and type notes worth converging into formal contracts
 - `scenarios/`: user or system scenarios that may later become behaviors or flows
-- `testing/`: structured test scenario drafts, coverage rules, risk matrices, and verification hints
+- `testing/`: testing-draft entry points and optional support matrices, including `test-scenarios-draft.md`, scenario records, coverage rules, risk matrices, and verification hints
 - `references/`: copied or normalized source excerpts, screenshots, links, and evidence
 - `open-questions.md`: unresolved items that should stay explicit in OpenSpec
 
