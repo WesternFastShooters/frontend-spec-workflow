@@ -83,6 +83,18 @@ Inside OpenSpec, refer to verification by intent:
 
 Do not write `jest`, `vitest`, `playwright`, or other runner names into OpenSpec unless the user explicitly asks for an implementation mapping outside the spec itself.
 
+## Verification sequencing
+
+OpenSpec should capture not only what must be verified, but also when each verification layer becomes appropriate.
+
+- `contract` comes first and defines the hard boundary.
+- `logic-unit` is expected as soon as a logic behavior is concrete enough to implement.
+- `component-unit` is expected once a single UI component has a stable interface and interaction shape, even if page-level integration is not finished.
+- `integration` becomes appropriate when module boundaries are wired together and the bridge behavior is ready to validate.
+- `journey` is defined early in `flows/`, but runnable end-to-end implementation should wait until the route, selectors, mocks, and critical UI path are integration-ready.
+
+Do not let downstream agents treat `flows/` as a signal to immediately write full end-to-end code before the target path is actually ready.
+
 ## Output shape
 
 Read [references/output-structure.md](references/output-structure.md) before creating files.
@@ -167,6 +179,7 @@ If styling fidelity matters, point to Storybook stories, screenshots, or visual 
 ### `openspec/rules/`
 
 - Capture project-wide constraints such as contract-first sequencing, selector rules, coverage intent, environment requirements, and CI gates.
+- Include verification timing rules when they matter, especially to prevent early E2E generation before integration readiness.
 - Prefer rules that are reusable across modules.
 
 ## Templates
@@ -191,7 +204,7 @@ Default to this sequence:
 4. Create or refresh contracts.
 5. Create the minimum useful behavior units.
 6. Create only the highest-value flows.
-7. Add rules for verification abstraction, selector sourcing, mock boundaries, and unresolved risks.
+7. Add rules for verification abstraction, selector sourcing, verification sequencing, mock boundaries, and unresolved risks.
 
 ## Completion bar
 
@@ -199,6 +212,7 @@ The spec is in good shape when:
 
 - an implementation agent can tell what must be built
 - a test-generation agent can tell what should be verified at each abstract layer
+- a downstream agent can tell when each verification layer is ready to be authored
 - selectors and API shapes come from contracts rather than invention
 - unresolved ambiguity is explicit
 - the scope is bounded enough that a downstream agent does not need to re-read the entire discussion thread to begin implementation

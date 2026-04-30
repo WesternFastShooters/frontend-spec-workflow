@@ -89,8 +89,20 @@ This skill is successful when:
 
 - multiple source materials are converged into one durable spec tree
 - downstream AI agents can implement against the spec without re-reading the entire discussion
+- downstream AI agents can tell which verification layer should be written now versus later
 - selectors, APIs, and boundaries come from contracts instead of invention
 - unresolved ambiguity is explicit instead of silently guessed away
+
+## Verification Timing
+
+The generated OpenSpec should also encode verification timing, not just verification coverage.
+
+- logic-heavy behaviors should point first to `logic-unit`
+- single UI components can point to `component-unit` as soon as their local interface and interactions are stable
+- integrated module bridges can point to `integration`
+- user-visible critical paths can be described in `flows/` early, but runnable `journey` tests should wait until the relevant path is integration-ready
+
+This helps downstream agents avoid writing end-to-end tests too early or overloading component tests with page-level business assertions.
 
 ## Install
 
