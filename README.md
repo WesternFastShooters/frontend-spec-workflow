@@ -1,6 +1,6 @@
 # Frontend Spec Workflow
 
-`@westernfastshooters/frontend-spec-workflow` is a Codex skill package for frontend teams that want a discussion-stage draft stack and a later OpenSpec convergence step.
+`@westernfastshooters/frontend-spec-workflow` is a Codex frontend workflow package and plugin shape for teams that want discussion-stage drafts, test planning, test generation, and a later OpenSpec convergence step.
 
 ## Bundled Skills
 
@@ -12,6 +12,9 @@ This package now bundles a small frontend engineering skill stack:
 - `frontend-test-scenario-enumerator`
   Enumerates frontend test scenarios as structured draft assets during discussion, with strong coverage across flows, interactions, environments, data variants, failure cases, and risk pairs.
   Recommended trigger: `/frontend-spec-workflow-enumerate-tests`
+- `frontend-test-case-generator`
+  Generates concrete unit, component, integration, and Playwright journey test code from accepted requirements, OpenSpec assets, testing drafts, and current implementation.
+  Recommended trigger: `/frontend-spec-workflow-generate-tests`
 - `openspec-frontend-project`
   Reads the draft artifacts and other source materials, then converges them into durable OpenSpec assets under `openspec/`.
   Recommended trigger: `/frontend-spec-workflow-solidify-openspec`
@@ -24,6 +27,7 @@ The intended workflow is:
 2. Use `frontend-discussion-drafts` with `/frontend-spec-workflow-draft` to write stable planning artifacts into `planning/frontend/`.
 3. Use `frontend-test-scenario-enumerator` with `/frontend-spec-workflow-enumerate-tests` to expand and structure the candidate verification space in `planning/frontend/testing/`.
 4. Use `openspec-frontend-project` with `/frontend-spec-workflow-solidify-openspec` to turn the draft tree plus other sources into `openspec/`.
+5. Use `frontend-test-case-generator` with `/frontend-spec-workflow-generate-tests` when the bounded slice is ready for real test files at the correct verification layer.
 
 This makes the discussion phase reviewable on disk before formal OpenSpec convergence begins.
 
@@ -34,28 +38,29 @@ The discussion-stage skills share a preferred draft location:
 ```text
 planning/
   frontend/
-    overview.md
-    architecture.md
-    decisions.md
+    frontend-discussion-draft.md
     modules/
     contracts/
     scenarios/
     testing/
+      test-scenarios-draft.md
     references/
     open-questions.md
 ```
 
-The test-scenario skill typically adds:
+The test-scenario skill typically adds a canonical testing draft plus optional support files:
 
 ```text
 planning/
   frontend/
     testing/
-      overview.md
+      test-scenarios-draft.md
+      scenario-records.md
       flow-matrix.yaml
       interaction-matrices/
       environment-matrix.yaml
       data-variants.yaml
+      interface-matrix.yaml
       coverage-rules.yaml
       high-risk-pairs.yaml
       verification-layer-map.yaml
@@ -133,6 +138,8 @@ The bundled skills do not:
   Write the current bounded frontend discussion into draft artifacts under `planning/frontend/`.
 - `/frontend-spec-workflow-enumerate-tests`
   Expand the current bounded frontend testing surface into structured scenario drafts under `planning/frontend/testing/`.
+- `/frontend-spec-workflow-generate-tests`
+  Generate concrete frontend test files from accepted scenarios, OpenSpec constraints, and current implementation.
 - `/frontend-spec-workflow-solidify-openspec`
   Converge the draft tree and other source materials into durable OpenSpec assets under `openspec/`.
 
@@ -194,6 +201,21 @@ Preserve:
 Do not invent missing contracts, selectors, or APIs.
 ```
 
+### Generate Frontend Test Files
+
+```text
+/frontend-spec-workflow-generate-tests
+Scope: <bounded module / component / flow>
+Target layer: <logic-unit | component-unit | integration | journey>
+Read openspec/ and planning/frontend/testing/ first.
+Generate concrete test files.
+Rules:
+- expected behavior comes from accepted scenarios and contracts first
+- preserve scenario-id traceability
+- mock only external dependencies
+- do not generate journey tests before the path is integration-ready
+```
+
 ## OpenSpec Skill Trigger
 
 Use `/frontend-spec-workflow-solidify-openspec` as the team-facing trigger phrase when the current frontend scope has been discussed clearly enough and the next step is to write the agreed context into OpenSpec.
@@ -227,6 +249,26 @@ The generated OpenSpec should also encode verification timing, not just verifica
 
 This helps downstream agents avoid writing end-to-end tests too early or overloading component tests with page-level business assertions.
 
+## Plugin Shape
+
+This repo can also be treated as a Codex workflow plugin shape rather than only a raw skill bundle.
+
+The plugin manifest lives at:
+
+- `.codex-plugin/plugin.json`
+
+Conceptually, the plugin bundles:
+
+- skills
+- team-facing slash triggers
+- agent metadata under each skill's `agents/openai.yaml`
+
+Its purpose is to provide an OpenSpec-based frontend delivery workflow for:
+
+- project bootstrap
+- feature implementation
+- bounded refactor delivery
+
 ## Install
 
 ```bash
@@ -242,5 +284,5 @@ npx github:WesternFastShooters/frontend-spec-workflow --tool codex
 Install a subset if needed:
 
 ```bash
-npx @westernfastshooters/frontend-spec-workflow --tool codex --skill frontend-discussion-drafts --skill frontend-test-scenario-enumerator
+npx @westernfastshooters/frontend-spec-workflow --tool codex --skill frontend-discussion-drafts --skill frontend-test-scenario-enumerator --skill frontend-test-case-generator
 ```

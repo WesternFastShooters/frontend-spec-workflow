@@ -181,7 +181,8 @@ function main() {
   console.log(`Project root: ${args.dest}`);
   console.log("Next step inside Codex:");
   console.log("  Use the discussion-stage skills to write project-local draft assets under planning/frontend/,");
-  console.log("  then use openspec-frontend-project to synthesize openspec/ from those draft artifacts and source documents.");
+  console.log("  then use openspec-frontend-project to synthesize openspec/ from those draft artifacts and source documents,");
+  console.log("  and use frontend-test-case-generator when the current slice is ready for real test files.");
 }
 
 main();

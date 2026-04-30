@@ -1,0 +1,3 @@
+display_name: Frontend Test Case Generator
+short_description: Generate real frontend test code from OpenSpec, scenario drafts, and implementation.
+default_prompt: Use $frontend-test-case-generator with /frontend-spec-workflow-generate-tests to generate concrete frontend test files for the current bounded scope. Read openspec/ plus planning/frontend/testing/ first, choose the correct verification layer, and keep tests aligned to accepted scenario intent instead of inferring expectations from code alone.

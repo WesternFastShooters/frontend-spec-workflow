@@ -1,0 +1,42 @@
+{
+  "name": "frontend-spec-workflow",
+  "version": "0.1.0",
+  "description": "OpenSpec-based frontend workflow plugin for Codex. Bundles discussion drafting, test-scenario enumeration, test-code generation, and OpenSpec solidification for feature and project delivery.",
+  "author": {
+    "name": "WesternFastShooters"
+  },
+  "homepage": "https://github.com/WesternFastShooters/frontend-spec-workflow",
+  "repository": "https://github.com/WesternFastShooters/frontend-spec-workflow",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "plugin",
+    "openspec",
+    "frontend",
+    "workflow",
+    "testing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Frontend Spec Workflow",
+    "shortDescription": "OpenSpec-based workflow plugin for frontend discussion, spec solidification, and test generation",
+    "longDescription": "Provides a workflow-oriented frontend engineering plugin for Codex. It helps teams stabilize discussion drafts, enumerate testing scenarios, generate concrete test code, and converge accepted context into durable OpenSpec assets.",
+    "developerName": "WesternFastShooters",
+    "category": "Engineering",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/WesternFastShooters/frontend-spec-workflow",
+    "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
+    "defaultPrompt": [
+      "Use Frontend Spec Workflow to write frontend discussion drafts into planning/frontend/",
+      "Use Frontend Spec Workflow to enumerate frontend testing scenarios before OpenSpec solidification",
+      "Use Frontend Spec Workflow to generate frontend test files from OpenSpec and scenario drafts",
+      "Use Frontend Spec Workflow to solidify the accepted frontend scope into openspec/"
+    ],
+    "brandColor": "#0F766E",
+    "screenshots": []
+  }
+}

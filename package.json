@@ -2,10 +2,11 @@
   "name": "@westernfastshooters/frontend-spec-workflow",
   "version": "0.1.0",
   "private": false,
-  "description": "Install a Codex frontend skill stack for draft capture, test-scenario enumeration, and OpenSpec convergence.",
+  "description": "Install a Codex frontend workflow stack for draft capture, test-scenario enumeration, test generation, and OpenSpec convergence.",
   "files": [
     "bin",
     "skills",
+    ".codex-plugin",
     "README.md"
   ],
   "bin": {
