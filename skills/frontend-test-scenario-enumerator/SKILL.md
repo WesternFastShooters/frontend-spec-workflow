@@ -40,6 +40,7 @@ This skill is not responsible for:
 Read [references/output-structure.md](references/output-structure.md) before writing files.
 Read [references/scenario-dimensions.md](references/scenario-dimensions.md) before expanding coverage.
 Read [references/scenario-design-methods.md](references/scenario-design-methods.md) before turning requirements or interfaces into scenarios.
+Read [references/requirements-first-testing.md](references/requirements-first-testing.md) before converting accepted requirements into scenario drafts that later AI test authors can trust.
 
 Default destination:
 
@@ -95,26 +96,42 @@ Start from a bounded feature, module, or journey and expand coverage across thes
 
 Prefer structured matrices over prose-only notes.
 Every scenario should have a stable scenario ID so later test code can trace back to it.
+Prefer requirement-first scenario design over implementation-first case invention.
 Write or refresh the canonical testing draft first, then split into extra matrices only when that adds review value.
 
 ## Enumeration rules
 
 1. Begin with the current bounded slice, not the whole product.
 2. Read the current draft artifacts first, especially `planning/frontend/frontend-discussion-draft.md` and any requirement, architecture, contract, scenario, and open-question drafts under `planning/frontend/`.
-3. If requirement or interface clarity is weak, record that weakness and enumerate scenarios against the best-known requirement statement instead of silently inventing product behavior.
-4. Enumerate candidate scenarios by combining dimensions and by applying explicit scenario-design methods instead of relying on memory.
-5. Add pruning rules so the result stays reviewable.
-6. Mark:
+3. Treat approved requirement statements, interface definitions, and accepted business rules as the truth source for expected behavior instead of reverse-engineering intent from the current implementation.
+4. If requirement or interface clarity is weak, record that weakness and enumerate scenarios against the best-known requirement statement instead of silently inventing product behavior.
+5. Enumerate candidate scenarios by combining dimensions and by applying explicit scenario-design methods instead of relying on memory.
+6. Make scenario-to-requirement traceability explicit so later test-code generation can map `requirement -> scenario id -> automated test`.
+7. Add pruning rules so the result stays reviewable.
+8. Mark:
 - must-cover scenarios
 - high-risk pairs
 - deferred combinations
 - unknowns that block reliable test planning
-7. Keep the result ready for later OpenSpec convergence and later test-code generation.
+9. Keep the result ready for later OpenSpec convergence and later test-code generation.
+
+## Downstream test-code guidance
+
+This skill does not generate final unit-test or E2E files, but it should prepare the exact material a later test-code agent will need.
+
+Make the testing draft support these downstream rules:
+
+- later test authors should generate tests from the accepted scenario set, not from coverage chasing alone
+- later test authors should detect and surface `scenario vs implementation` conflicts instead of silently aligning expectations to current code
+- later test authors should avoid asserting private implementation details when an observable contract is available
+- later test authors should only mock external dependencies and environment boundaries, not the business behavior being verified
+- later test authors should be able to point each generated test back to a stable scenario ID
 
 ## What to challenge
 
 When reviewing discussion output, explicitly challenge whether it covers:
 
+- whether the expected result comes from requirement or interface truth rather than from current code behavior
 - requirement and interface acceptance criteria
 - empty, min, max, and malformed data
 - loading, error, retry, rollback, and recovery
@@ -130,6 +147,7 @@ When reviewing discussion output, explicitly challenge whether it covers:
 The scenario draft is in good shape when:
 
 - requirement and interface intent has been translated into stable scenario records with IDs
+- the expected results are sourced from requirements or contracts rather than inferred from current implementation behavior
 - the next agent can see what must be covered at each verification layer
 - major scenario dimensions are explicit rather than implied
 - high-risk pairs are called out instead of buried
