@@ -11,6 +11,15 @@ This skill is for draft stabilization, not final spec convergence.
 
 Recommended trigger phrase: `/frontend-spec-workflow-draft`
 
+Suggested invocation shape:
+
+```text
+/frontend-spec-workflow-draft
+Scope: <bounded frontend slice>
+Write draft artifacts under planning/frontend/.
+Use the current discussion plus the relevant source documents.
+```
+
 ## Responsibility
 
 This skill is responsible for:

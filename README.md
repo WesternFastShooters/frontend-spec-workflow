@@ -136,6 +136,64 @@ The bundled skills do not:
 - `/frontend-spec-workflow-solidify-openspec`
   Converge the draft tree and other source materials into durable OpenSpec assets under `openspec/`.
 
+## Copyable Trigger Templates
+
+Use these as starting points in Codex or another AI workspace.
+
+### Draft Discussion Output
+
+```text
+/frontend-spec-workflow-draft
+Scope: <bounded feature / module / refactor slice>
+Write draft artifacts under planning/frontend/.
+Sources to consume:
+- current discussion context
+- <requirement docs>
+- <design notes>
+- <legacy code pointers>
+- <screenshots or Storybook references>
+Focus:
+- overview
+- architecture
+- confirmed decisions
+- module briefs
+- open questions
+```
+
+### Enumerate Frontend Test Scenarios
+
+```text
+/frontend-spec-workflow-enumerate-tests
+Scope: <bounded feature / module / journey>
+Write testing drafts under planning/frontend/testing/.
+Enumerate coverage across:
+- flows
+- interactions
+- environments
+- data variants
+- failure and recovery
+- high-risk pairs
+- verification layers
+Return:
+- must-cover scenarios
+- pruned/deferred combinations
+- open questions that block reliable coverage
+```
+
+### Solidify Into OpenSpec
+
+```text
+/frontend-spec-workflow-solidify-openspec
+Scope: <bounded feature / module / refactor slice>
+Read planning/frontend/ first, then other source materials.
+Converge the agreed context into openspec/.
+Preserve:
+- assumptions
+- open questions
+- source trace
+Do not invent missing contracts, selectors, or APIs.
+```
+
 ## OpenSpec Skill Trigger
 
 Use `/frontend-spec-workflow-solidify-openspec` as the team-facing trigger phrase when the current frontend scope has been discussed clearly enough and the next step is to write the agreed context into OpenSpec.

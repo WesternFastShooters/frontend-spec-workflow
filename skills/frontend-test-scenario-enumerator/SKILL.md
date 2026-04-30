@@ -11,6 +11,15 @@ This skill should enumerate scenarios, not generate final test code.
 
 Recommended trigger phrase: `/frontend-spec-workflow-enumerate-tests`
 
+Suggested invocation shape:
+
+```text
+/frontend-spec-workflow-enumerate-tests
+Scope: <bounded frontend slice>
+Write testing drafts under planning/frontend/testing/.
+Expand flows, interactions, environments, data variants, failures, and verification layers.
+```
+
 ## Responsibility
 
 This skill is responsible for:

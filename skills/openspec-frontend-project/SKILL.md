@@ -11,6 +11,15 @@ This skill is a convergence step. The user discusses the work in Codex, Claude, 
 
 Recommended trigger phrase: `/frontend-spec-workflow-solidify-openspec`
 
+Suggested invocation shape:
+
+```text
+/frontend-spec-workflow-solidify-openspec
+Scope: <bounded frontend slice>
+Read planning/frontend/ draft artifacts first.
+Converge the agreed context into openspec/.
+```
+
 ## Responsibility
 
 This skill is responsible for one thing:
